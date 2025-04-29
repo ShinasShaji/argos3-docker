@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Creating workspace
-TEMP_DIR=$(mktemp -d)
-cd "$TEMP_DIR" || exit
+# TEMP_DIR=$(mktemp -d)
+# cd "$TEMP_DIR" || exit
 
 # Gathering dependencies
 apt-get update
@@ -26,4 +26,4 @@ cp -r /usr/local/lib/argos3 /usr/lib
 ldconfig
 
 # Cleaning up
-rm -rf "$TEMP_DIR"
+# rm -rf "$TEMP_DIR"
