@@ -35,3 +35,28 @@ $ cd argos3-docker
 $ docker-compose up --build
 ```
 **NOTE:** This can take up to 15min to compile as it builds ARGoS from source.
+
+### Additional Notes
+
+The following environment variables were added to the container docker compose file due to a Qt platform plugin error.
+```bash
+export QT_QPA_PLATFORM=xcb
+export DISPLAY=:1
+```
+
+## Running example experiments
+
+To run the example experiments, you need to start the container (ensure that the name of the container is `argos3-docker-sim-1` using `sudo docker ps` or `sudo docker stats`) and then run the following command:
+```bash
+$ sudo docker exec -it argos3-docker-sim-1 /bin/bash
+```
+
+This will open a bash shell into the container in `/setup`. From there, you can run the following command to run the example experiments:
+```bash
+$ cd argos3-examples/
+$ argos3 -c experiments/diffusion_10.argos
+```
+
+This will run the `diffusion_10.argos` experiment. You can find more example experiments in the `argos3-examples/experiments/` directory.
+
+Visit http://localhost:6080/vnc.html to view the simulation window.
