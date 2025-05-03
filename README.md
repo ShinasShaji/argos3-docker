@@ -60,3 +60,53 @@ $ argos3 -c experiments/diffusion_10.argos
 This will run the `diffusion_10.argos` experiment. You can find more example experiments in the `argos3-examples/experiments/` directory.
 
 Visit http://localhost:6080/vnc.html to view the simulation window.
+
+## Remote Development with VSCode
+
+The container supports remote development through SSH, which is particularly useful with VSCode's Remote-SSH extension. The container exposes SSH on port 2222 and automatically configures environment variables to support GUI applications.
+
+### Connecting with VSCode
+
+1. Install the "Remote - SSH" extension in VSCode
+2. Add the following to your SSH config (`~/.ssh/config`) (optional, you may also use the UI to connect, but then the name of the host will be `localhost`):
+```
+Host argos-docker
+    HostName localhost
+    Port 2222
+    User dev
+    Password dev
+```
+
+3. Connect to the container:
+   - Open the Command Palette (Ctrl/Cmd + Shift + P)
+   - Type "Remote-SSH: Connect to Host"
+   - Select "argos-docker" (or `localhost` if you used the UI to connect, this can be renamed in the SSH config). You may also use the command: `ssh dev@localhost -p 2222` to connect.
+
+### Environment Variables
+
+The container automatically propagates environment variables from docker-compose.yml to SSH sessions, including:
+- Display settings for GUI applications
+- Qt platform configuration
+- Any custom environment variables you add
+
+This means you can:
+- Run ARGoS experiments directly from VSCode's integrated terminal
+- Debug applications with GUI components
+- Access all development tools with proper environment configuration
+
+### Files and Directories
+
+When using VSCode's Remote-SSH:
+- The workspace root is mounted at `/setup`
+- All environment variables from docker-compose.yml are automatically available
+
+### Troubleshooting
+
+If you encounter any issues with environment variables in SSH sessions:
+1. Verify the container is running: `sudo docker ps`
+2. Check SSH connection: `ssh dev@localhost -p 2222`
+3. Verify environment variables: `env | grep DISPLAY`
+4. Restart the SSH service in the container if needed:
+   ```bash
+   docker exec argos3-docker-sim-1 service ssh restart
+   ```

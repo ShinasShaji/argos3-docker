@@ -2,10 +2,15 @@ services:
   sim:
     build: .
     ports:
-      - "6080:80"
+      - "6080:80" # VNC
+      - "2222:22" # SSH
     environment:
       - QT_QPA_PLATFORM=xcb
       - DISPLAY=:1
       - RESOLUTION=1280x720
+      # optionally override default password:
+      # - DEV_PASSWORD=letmein
     volumes:
       - /dev/shm:/dev/shm
+      - ./collrob-swarm-assignment:/setup/collrob-swarm-assignment
+    restart: no
