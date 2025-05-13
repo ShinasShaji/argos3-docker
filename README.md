@@ -26,6 +26,28 @@ $ docker run \
 These options are given by the base image `dorowu/ubuntu-desktop-lxde-vnc`.
 For more customization information, visit https://hub.docker.com/r/dorowu/ubuntu-desktop-lxde-vnc.
 
+### Mounting Local Workspaces
+
+You can mount your local workspace into the container to work on your files directly.
+
+1. Using docker-compose (recommended):
+```yaml
+services:
+  sim:
+    build: .
+    ports:
+      - "6080:80"
+      - "2222:22"
+    volumes:
+      - /dev/shm:/dev/shm
+      - ./your-workspace:/setup/your-workspace
+```
+
+The mounted workspace will be available:
+- At `/setup/your-workspace` inside the container
+- Through VSCode when connected via SSH
+- With full read/write permissions
+
 ## Build it yourself
 
 To build and run the container:
